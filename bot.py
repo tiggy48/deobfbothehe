@@ -37,7 +37,7 @@ PASTEFY_API   = "https://pastefy.app/api/v2/paste"
 
 # ------------------------------------------------------------------ .promdeobf command config
 PROMDEOBF_PREFIX  = ".promdeobf"
-NODE_BIN          = "node"   # Node.js must be on PATH
+NODE_BIN          = shutil.which("node") or "node"
 PROMDEOBF_TIMEOUT = 60
 
 # ------------------------------------------------------------------ .lv2 command config

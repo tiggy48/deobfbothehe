@@ -23,6 +23,10 @@
 
 The bot listens only in channel `1541381741577510912`.
 
+The repository includes a Dockerfile that installs Python, Node.js, npm, and
+the Linux Lune runtime automatically on Railway. You do not need to install
+Node.js manually or add it to PATH on Railway.
+
 ## Discord configuration
 
 Enable the **Message Content Intent** for the bot in the Discord Developer

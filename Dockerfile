@@ -5,6 +5,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl unzip nodejs npm \
+    && node --version \
+    && npm --version \
     && rm -rf /var/lib/apt/lists/*
 
 # Railway runs Linux, while the archive only includes the Windows lune.exe.
