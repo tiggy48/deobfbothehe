@@ -1,0 +1,8 @@
+{
+  "name": "promdeobf",
+  "private": true,
+  "type": "commonjs",
+  "dependencies": {
+    "luau-web": "^1.0.0"
+  }
+}
