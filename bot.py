@@ -5,6 +5,7 @@ import os
 import re
 import time
 import pathlib
+import shutil
 import subprocess
 from datetime import datetime
 
@@ -85,7 +86,9 @@ IS_WINDOWS = os.name == "nt"
 
 ROOT = pathlib.Path(__file__).resolve().parent
 LUTE = ROOT / ("lute.exe" if IS_WINDOWS else "lute")
-LUNE_BIN = "lune.exe" if IS_WINDOWS else "lune"
+_lune_name = "lune.exe" if IS_WINDOWS else "lune"
+_bundled_lune = ROOT / _lune_name
+LUNE_BIN = str(_bundled_lune) if _bundled_lune.exists() else (shutil.which(_lune_name) or _lune_name)
 TMP  = ROOT / "bot_tmp"
 TMP.mkdir(exist_ok=True)
 
@@ -137,7 +140,12 @@ def _kill_tree(pid: int):
 def _dump_blocking(in_rel: str, out_rel: str, script: str = "main.luau"):
     """Run the exact same pipeline as the CLI. Returns (ok, reason, took)."""
     env = os.environ.copy()
-    env["HOOKOP_BIN"] = str(LUTE)
+    if LUTE.exists():
+        env["HOOKOP_BIN"] = str(LUTE)
+    else:
+        # lute.exe is bundled for Windows. On Linux, run hookOp through Lune.
+        env.pop("HOOKOP_BIN", None)
+        env["HOOKOP_USE_LUNE"] = "1"
 
     started = time.perf_counter()
     proc = subprocess.Popen(
@@ -708,7 +716,11 @@ async def handle_lv2(message: discord.Message, arg: str):
 
     import os as _os
     _lv2_env = _os.environ.copy()
-    _lv2_env["HOOKOP_BIN"] = str(LUTE)
+    if LUTE.exists():
+        _lv2_env["HOOKOP_BIN"] = str(LUTE)
+    else:
+        _lv2_env.pop("HOOKOP_BIN", None)
+        _lv2_env["HOOKOP_USE_LUNE"] = "1"
 
     start = time.perf_counter()
     try:
