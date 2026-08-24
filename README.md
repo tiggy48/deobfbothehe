@@ -47,3 +47,8 @@ The imported Lua/Luau executables are Windows binaries. They are included for
 reference, but Linux hosts such as Railway need Linux-compatible replacements
 for commands that invoke those engines. The bot itself can still connect and
 serve commands that do not require those binaries.
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+Railway rebuild trigger.
