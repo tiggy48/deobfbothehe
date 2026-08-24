@@ -37,7 +37,14 @@ PASTEFY_API   = "https://pastefy.app/api/v2/paste"
 
 # ------------------------------------------------------------------ .promdeobf command config
 PROMDEOBF_PREFIX  = ".promdeobf"
-NODE_BIN          = shutil.which("node") or "node"
+_node_candidates = (
+    os.environ.get("NODE_BIN"),
+    shutil.which("node"),
+    shutil.which("nodejs"),
+    "/usr/local/bin/node",
+    "/usr/bin/node",
+)
+NODE_BIN = next((path for path in _node_candidates if path and pathlib.Path(path).exists()), "node")
 PROMDEOBF_TIMEOUT = 60
 
 # ------------------------------------------------------------------ .lv2 command config

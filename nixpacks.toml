@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["python312", "nodejs_22", "curl", "unzip"]
+
+[phases.install]
+cmds = [
+  "pip install --no-cache-dir -r requirements.txt",
+  "cd promdeobf && npm install --omit=dev"
+]
+
+[start]
+cmd = "python bot.py"
